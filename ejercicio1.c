@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define FILAS 3
-#define COLUMNAS 3
+#define FILAS 5
+#define COLUMNAS 2 
 
 void ordenarMatriz(int *matriz) {
-	int total = FILAS * COLUMNAS;
+	int tamanio_mat = FILAS * COLUMNAS;
 	int temp;
 
-    //Se utilizó bubble sort
-	for (int i = 0; i < total - 1; i++) {
-        	for (int j = 0; j < total - i - 1; j++) {
+    //Se utilizó bubble sort como método de ordenamiento
+	for (int i = 0; i < tamanio_mat - 1; i++) {
+        	for (int j = 0; j < tamanio_mat - i - 1; j++) {
             		int *actual = matriz + j; //El puntero apunta al valor actual
             		int *siguiente = matriz + j + 1; //El apuntero apunta al Valor siguiente
 
