@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
         	return 1;
     	}
 
-    	FILE *txt_reemplazado = fopen("texto_txt_reemplazado.txt", "w");
+    	FILE *txt_reemplazado = fopen("texto_reemplazado.txt", "w");
     	if (!txt_reemplazado) {
         	perror("Error al crear el archivo de salida");
         	fclose(txt_original);
