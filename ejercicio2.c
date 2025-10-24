@@ -46,38 +46,45 @@ int main(int argc, char *argv[]) {
     	}
 
     	char palabra[MAX_PALABRA];
-    	char palabra_limpia[MAX_PALABRA];
+    	char palabra_sin_signos[MAX_PALABRA];
     	char *buscar = argv[2];
     	char *reemplazo = argv[3];
 
-    	// Leer palabra por palabra
+    	// Lee palabra por palabra
     	while (fscanf(txt_original, "%s", palabra) == 1) {
-        	strcpy(palabra_limpia, palabra);
-        	eliminarSignos(palabra_limpia);
+        	strcpy(palabra_sin_signos, palabra);
+        	eliminarSignos(palabra_sin_signos);
 
         	// Si la palabra (sin puntuación) coincide con la que se busca, se procede a reemplazar
-        	if (strcmp(palabra_limpia, buscar) == 0) {
+        	if (strcmp(palabra_sin_signos, buscar) == 0) {
             	
             	int inicio = 0;
 	   	int  fin = strlen(palabra);
-            	// Detectar si tenía puntuación al inicio o final
-            	while (inicio < fin && ispunct((unsigned char)palabra[inicio])) inicio++;
-            	while (fin > 0 && ispunct((unsigned char)palabra[fin - 1])) fin--;
 
-            	// Imprimir respetando los signos de puntuación txt_originales
-            	// Parte inicial (puntuación)
-            	for (int i = 0; i < inicio; i++) fputc(palabra[i], txt_reemplazado);
-            	// Palabra reemplazada
+            	// Detecta si tenía puntuación al inicio o final de la palabra
+            	while (inicio < fin && ispunct((unsigned char)palabra[inicio])) 
+			inicio++;
+
+            	while (fin > 0 && ispunct((unsigned char)palabra[fin - 1])) 
+			fin--;
+
+            	// Se imprimen de tal forma que se mantengan los signos de puntuación del archivo original
+            	// Se imprime el primer signo de puntuación (si lo tiene) en el archivo
+            	for (int i = 0; i < inicio; i++) 
+			fputc(palabra[i], txt_reemplazado); 
+            	
+		// Reemplaza la palabra en el archivo 
             	fputs(reemplazo, txt_reemplazado);
-            	// Parte final (puntuación)
+            	
+		// Imprimer el último signo de puntuación (si lo tiene) en el archivo
             	for (int i = fin; palabra[i] != '\0'; i++) 
 			fputc(palabra[i], txt_reemplazado);
 		}
 		else {
-        	    fputs(palabra, txt_reemplazado);
+        	    fputs(palabra, txt_reemplazado); //Imprime el resto del texto 
         }
 
-        fputc(' ', txt_reemplazado); // Separa palabras con espacio
+        fputc(' ', txt_reemplazado); // Añade un espacio al final de cada palabra para separala de la siguiente
     }
 
     fclose(txt_original);
