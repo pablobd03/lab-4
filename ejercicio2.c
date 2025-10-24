@@ -14,13 +14,13 @@ void eliminarSignos(char *palabra) {
         	inicio++; //El puntero apunta a la primera letra de la palabra (ignorando signos)
     	}
 
-   	 // Eliminar puntuación al final de la palabra
+   	 	// Eliminar puntuación al final de la palabra
     	while (fin >= inicio && ispunct((unsigned char)*fin)) {
         	*fin = '\0';
         	fin--;
     	}
 
-    // Mover palabra sin signo, en caso de haber eliminado el primer caracter
+    	// Mover palabra sin signo, en caso de haber eliminado el primer caracter
     	if (inicio != palabra) {
         	memmove(palabra, inicio, strlen(inicio) + 1);
     	}
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
     	FILE *txt_reemplazado = fopen("texto_reemplazado.txt", "w");
     	if (!txt_reemplazado) {
-        	perror("Error al crear el archivo de salida");
+        	fprintf(stderr, "Error al crear el archivo de salida");
         	fclose(txt_original);
         	return 1;
     	}
@@ -59,27 +59,27 @@ int main(int argc, char *argv[]) {
         	if (strcmp(palabra_sin_signos, buscar) == 0) {
             	
             	int inicio = 0;
-	   	int  fin = strlen(palabra);
+	   			int  fin = strlen(palabra);
 
             	// Detecta si tenía puntuación al inicio o final de la palabra
             	while (inicio < fin && ispunct((unsigned char)palabra[inicio])) 
-			inicio++;
+					inicio++;
 
             	while (fin > 0 && ispunct((unsigned char)palabra[fin - 1])) 
-			fin--;
+					fin--;
 
             	// Se imprimen de tal forma que se mantengan los signos de puntuación del archivo original
             	// Se imprime el primer signo de puntuación (si lo tiene) en el archivo
             	for (int i = 0; i < inicio; i++) 
-			fputc(palabra[i], txt_reemplazado); 
+					fputc(palabra[i], txt_reemplazado); 
             	
-		// Reemplaza la palabra en el archivo 
+				// Reemplaza la palabra en el archivo 
             	fputs(reemplazo, txt_reemplazado);
             	
-		// Imprimer el último signo de puntuación (si lo tiene) en el archivo
+				// Imprimer el último signo de puntuación (si lo tiene) en el archivo
             	for (int i = fin; palabra[i] != '\0'; i++) 
-			fputc(palabra[i], txt_reemplazado);
-		}
+					fputc(palabra[i], txt_reemplazado);
+			}
 		else {
         	    fputs(palabra, txt_reemplazado); //Imprime el resto del texto 
         }
